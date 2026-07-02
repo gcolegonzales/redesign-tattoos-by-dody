@@ -49,8 +49,8 @@ On-page SEO is wired in without altering the visible design or content:
 - Single `<h1>`.
 
 **Base URL placeholder:** canonical, `og:url`, sitemap, robots `Sitemap:`, and all schema
-`url`/`image` values use the literal placeholder `https://REPLACE-WITH-DOMAIN.com/`. At deploy,
-do a one-line find-and-replace of `https://REPLACE-WITH-DOMAIN.com/` across `index.html`,
+`url`/`image` values use the literal placeholder `https://tattoosbydody.com/`. At deploy,
+do a one-line find-and-replace of `https://tattoosbydody.com/` across `index.html`,
 `sitemap.xml`, and `robots.txt` with the real domain.
 
 ## View it
