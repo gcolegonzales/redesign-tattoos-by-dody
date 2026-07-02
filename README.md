@@ -8,7 +8,7 @@ has **no website** — only a Facebook page.
 
 - **No website today.** Customers can't find hours, styles, artists, or a way to inquire
   without digging through Facebook. This concept gives them a real home on the web.
-- **Reputation isn't being showcased.** ~317 Facebook reviews, ~96% recommend, 35+ years in
+- **Reputation isn't being showcased.** Hundreds of 5-star Facebook reviews and 35+ years in
   business — huge trust signals that a proper site can lead with.
 - **No booking path.** This concept adds a real "Request a Consultation" inquiry form plus
   click-to-call, so the shop captures leads instead of losing them.

@@ -340,6 +340,9 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 700; line-height: 1.05; ma
 .stars { color: var(--gold-2); letter-spacing: .18em; margin-bottom: .8rem; font-size: 1.05rem; }
 .review-card p { font-family: var(--f-serif); font-size: 1.2rem; color: var(--bone); margin: 0 0 1rem; line-height: 1.4; }
 .review-card cite { font-family: var(--f-head); text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; color: var(--bone-dim); font-style: normal; }
+.reviews-link { margin: 1rem 0 0; font-family: var(--f-head); text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; }
+.reviews-link a { color: var(--gold-2); }
+.reviews-link a:hover { color: var(--bone); }
 
 /* =================== BOOKING FORM =================== */
 .book { background:
