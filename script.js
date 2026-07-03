@@ -36,10 +36,27 @@
   var navList = document.getElementById("nav-list");
   var scrim = document.getElementById("nav-scrim");
 
-  /* Relocate the drawer to <body> so no filtered/transformed ancestor (the header uses
-     backdrop-filter) becomes its containing block and collapses the fixed positioning. */
-  if (drawerRoot && drawerRoot.parentElement !== document.body) {
-    document.body.appendChild(drawerRoot);
+  /* Relocate the drawer to <body> ONLY at mobile width so no filtered/transformed ancestor
+     (the header uses backdrop-filter) becomes its containing block and collapses the fixed
+     positioning. On desktop it must stay in the header, where `display:contents` lets the
+     nav-list render inline; moving it to <body> would drop the links at the page bottom. */
+  if (drawerRoot) {
+    var origParent = drawerRoot.parentElement;
+    var origNext = drawerRoot.nextElementSibling;
+    var mobileMq = window.matchMedia("(max-width: 860px)");
+    var placeDrawer = function (isMobile) {
+      if (isMobile) {
+        if (drawerRoot.parentElement !== document.body) {
+          document.body.appendChild(drawerRoot);
+        }
+      } else if (origParent && drawerRoot.parentElement !== origParent) {
+        origParent.insertBefore(drawerRoot, origNext);
+      }
+    };
+    placeDrawer(mobileMq.matches);
+    var onMqChange = function (e) { placeDrawer(e.matches); };
+    if (mobileMq.addEventListener) mobileMq.addEventListener("change", onMqChange);
+    else if (mobileMq.addListener) mobileMq.addListener(onMqChange); /* Safari < 14 */
   }
 
   if (toggle && drawerRoot && navList) {
