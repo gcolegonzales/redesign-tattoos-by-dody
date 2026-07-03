@@ -91,24 +91,27 @@
           <span class="sr-only">Menu</span>
           <span class="bars" aria-hidden="true"></span>
         </button>
-      </nav>
-    </div>
 
-    <!-- Mobile drawer clip-wrapper (direct child of header inner sibling; relocated to <body> via JS so no filtered ancestor collapses fixed positioning) -->
-    <div class="nav-drawer-root" id="nav-drawer-root">
-      <div class="nav-scrim" id="nav-scrim" hidden></div>
-      <button class="nav-close" id="nav-close" type="button" aria-label="Close menu" hidden>
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <ul class="nav-list" id="nav-list">
-        <li><a href="#legacy">The Legacy</a></li>
-        <li><a href="#styles">Styles</a></li>
-        <li><a href="#artists">Artists</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#visit">Visit</a></li>
-        <li><a href="#book" class="nav-cta">Request Consult</a></li>
-      </ul>
+        <!-- Drawer clip-wrapper lives inside .site-nav so `display:contents` renders the
+             nav-list inline in the header's flex row (right-aligned). On mobile it is
+             relocated to <body> via JS so no filtered/transformed ancestor collapses the
+             fixed off-canvas panel. -->
+        <div class="nav-drawer-root" id="nav-drawer-root">
+          <div class="nav-scrim" id="nav-scrim" hidden></div>
+          <button class="nav-close" id="nav-close" type="button" aria-label="Close menu" hidden>
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="nav-list" id="nav-list">
+            <li><a href="#legacy">The Legacy</a></li>
+            <li><a href="#styles">Styles</a></li>
+            <li><a href="#artists">Artists</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#visit">Visit</a></li>
+            <li><a href="#book" class="nav-cta">Request Consult</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
   </header>
 
