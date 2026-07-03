@@ -15,7 +15,7 @@
   <meta property="og:description" content="One of south Louisiana's oldest and busiest tattoo studios — traditional, black & gray, color, custom work and cover-ups since 1990. Gonzales, LA." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://tattoosbydody.com/" />
-  <meta property="og:image" content="https://tattoosbydody.com/assets/hero.jpg" />
+  <meta property="og:image" content="https://tattoosbydody.com/assets/og-image.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Tattoos By Dody" />
 
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tattoos By Dody — Tattooing Gonzales, LA Since 1990" />
   <meta name="twitter:description" content="One of south Louisiana's oldest and busiest tattoo studios — traditional, black & gray, color, custom work and cover-ups since 1990. Gonzales, LA." />
-  <meta name="twitter:image" content="https://tattoosbydody.com/assets/hero.jpg" />
+  <meta name="twitter:image" content="https://tattoosbydody.com/assets/og-image.jpg" />
 
   <!-- JSON-LD structured data -->
   <script type="application/ld+json">
@@ -33,7 +33,7 @@
     "name": "Tattoos By Dody",
     "description": "One of south Louisiana's oldest and busiest tattoo studios — traditional, black & gray, color, custom work and cover-ups since 1990.",
     "url": "https://tattoosbydody.com/",
-    "image": "https://tattoosbydody.com/assets/hero.jpg",
+    "image": "https://tattoosbydody.com/assets/og-image.jpg",
     "telephone": "+1-225-644-2856",
     "priceRange": "$$",
     "foundingDate": "1990",
@@ -87,7 +87,7 @@
       </a>
 
       <nav class="site-nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Menu">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Open menu">
           <span class="sr-only">Menu</span>
           <span class="bars" aria-hidden="true"></span>
         </button>
@@ -97,6 +97,9 @@
     <!-- Mobile drawer clip-wrapper (direct child of header inner sibling; relocated to <body> via JS so no filtered ancestor collapses fixed positioning) -->
     <div class="nav-drawer-root" id="nav-drawer-root">
       <div class="nav-scrim" id="nav-scrim" hidden></div>
+      <button class="nav-close" id="nav-close" type="button" aria-label="Close menu" hidden>
+        <span aria-hidden="true">&times;</span>
+      </button>
       <ul class="nav-list" id="nav-list">
         <li><a href="#legacy">The Legacy</a></li>
         <li><a href="#styles">Styles</a></li>

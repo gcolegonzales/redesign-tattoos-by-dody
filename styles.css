@@ -219,7 +219,22 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 700; line-height: 1.05; ma
     padding: .5rem 1rem .5rem 0;    /* right-side breathing room */
   }
   .nav-list .nav-cta { margin-top: .4rem; text-align: center; padding: .75rem 1rem !important; }
+
+  .nav-close {
+    position: fixed; top: 1rem; right: 1rem;
+    width: 44px; height: 44px; z-index: 130;
+    display: none; align-items: center; justify-content: center;
+    background: transparent; border: 1px solid rgba(255,255,255,.25);
+    border-radius: 8px; color: var(--bone);
+    font-size: 1.9rem; line-height: 1; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-close:hover { border-color: var(--crimson); color: #fff; }
+  .nav-drawer-root.open .nav-close { display: flex; }
 }
+
+/* Close button never shown on desktop (drawer is inline nav there). */
+.nav-close { display: none; }
 
 /* =================== HERO =================== */
 .hero { position: relative; overflow: hidden; padding: 0; background: var(--ink); }

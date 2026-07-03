@@ -59,27 +59,130 @@
     else if (mobileMq.addListener) mobileMq.addListener(onMqChange); /* Safari < 14 */
   }
 
+  var navClose = document.getElementById("nav-close");
   if (toggle && drawerRoot && navList) {
     if (scrim) scrim.hidden = false; /* controlled via .open / pointer-events, not [hidden] */
-    var setNav = function (open) {
-      toggle.setAttribute("aria-expanded", String(open));
-      drawerRoot.classList.toggle("open", open);
+
+    var isOpen = false;
+    /* Siblings of the drawer we mark inert while it's open (everything except drawerRoot). */
+    var lastFocused = null;
+
+    var isMobile = function () {
+      return window.matchMedia("(max-width: 860px)").matches;
     };
-    var closeNav = function () { setNav(false); };
+
+    /* Elements that should NOT be reachable by Tab when the drawer is closed. */
+    var drawerFocusables = function () {
+      return Array.prototype.slice.call(
+        drawerRoot.querySelectorAll("a[href], button:not([disabled])")
+      );
+    };
+
+    /* Remove/restore the off-canvas links from the tab order when closed (mobile only). */
+    var syncClosedTabOrder = function () {
+      var hide = isMobile() && !isOpen;
+      drawerFocusables().forEach(function (el) {
+        if (hide) el.setAttribute("tabindex", "-1");
+        else el.removeAttribute("tabindex");
+      });
+    };
+
+    /* Mark the rest of the page inert/aria-hidden (all body children except drawerRoot). */
+    var setBackgroundInert = function (on) {
+      Array.prototype.forEach.call(document.body.children, function (el) {
+        if (el === drawerRoot) return;
+        if (on) {
+          el.setAttribute("aria-hidden", "true");
+          el.setAttribute("data-nav-inert", "");
+          if ("inert" in HTMLElement.prototype) el.inert = true;
+        } else if (el.hasAttribute("data-nav-inert")) {
+          el.removeAttribute("aria-hidden");
+          el.removeAttribute("data-nav-inert");
+          if ("inert" in HTMLElement.prototype) el.inert = false;
+        }
+      });
+    };
+
+    var setNav = function (open) {
+      isOpen = open;
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      drawerRoot.classList.toggle("open", open);
+      if (navClose) navClose.hidden = !open;
+
+      if (open) {
+        lastFocused = document.activeElement;
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+        setBackgroundInert(true);
+        syncClosedTabOrder(); /* clears tabindex=-1 so links are focusable */
+        var focusables = drawerFocusables();
+        var first = navClose || focusables[0];
+        if (first) first.focus();
+      } else {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        setBackgroundInert(false);
+        syncClosedTabOrder();
+      }
+    };
+
+    var closeNav = function (returnFocus) {
+      if (!isOpen) return;
+      setNav(false);
+      if (returnFocus !== false && toggle) toggle.focus();
+    };
 
     toggle.addEventListener("click", function () {
       var open = toggle.getAttribute("aria-expanded") === "true";
-      setNav(!open);
+      if (open) closeNav();
+      else setNav(true);
       /* keep header visible while menu is open */
       if (header) header.classList.remove("hide");
     });
+
     navList.addEventListener("click", function (e) {
-      if (e.target.closest("a")) closeNav();
+      if (e.target.closest("a")) closeNav(false); /* let the anchor take focus/scroll */
     });
-    if (scrim) scrim.addEventListener("click", closeNav);
+    if (navClose) navClose.addEventListener("click", function () { closeNav(); });
+    if (scrim) scrim.addEventListener("click", function () { closeNav(); });
+
+    /* Escape closes + focus trap (Tab cycles within the drawer). */
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeNav();
+      if (!isOpen) return;
+      if (e.key === "Escape") { closeNav(); return; }
+      if (e.key !== "Tab") return;
+      var focusables = [navClose].concat(drawerFocusables()).filter(Boolean);
+      if (!focusables.length) return;
+      var firstEl = focusables[0];
+      var lastEl = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) {
+        e.preventDefault(); lastEl.focus();
+      } else if (!e.shiftKey && document.activeElement === lastEl) {
+        e.preventDefault(); firstEl.focus();
+      } else if (!drawerRoot.contains(document.activeElement)) {
+        e.preventDefault(); firstEl.focus();
+      }
     });
+
+    /* Reset state cleanly when crossing the desktop breakpoint. */
+    var bpMq = window.matchMedia("(max-width: 860px)");
+    var onBpChange = function () {
+      if (isOpen) closeNav(false);
+      isOpen = false;
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+      drawerRoot.classList.remove("open");
+      if (navClose) navClose.hidden = true;
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      setBackgroundInert(false);
+      syncClosedTabOrder();
+    };
+    if (bpMq.addEventListener) bpMq.addEventListener("change", onBpChange);
+    else if (bpMq.addListener) bpMq.addListener(onBpChange);
+
+    syncClosedTabOrder(); /* initial: hide off-canvas links from Tab on mobile */
   }
 
   /* ---- Scroll reveal ---- */
